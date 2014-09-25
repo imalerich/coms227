@@ -111,7 +111,7 @@ public class GameState
 	 */
 	public void fieldGoal(boolean success)
 	{
-		if (!success)
+		if (success)
 		{
 			// the field goal was successful, award the point
 			if (currentOffense == 0)
@@ -239,6 +239,7 @@ public class GameState
 		// check if a touchdown occurs
 		if (ballLocation < 0)
 		{
+			// add the score for the appropriate team
 			if (currentOffense == 0)
 			{
 				score0 += TOUCHDOWN_POINTS;
