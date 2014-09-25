@@ -20,10 +20,8 @@ public class NumberPower
 		System.out.println("Enter a number: ");
 		
 		// make sure the user inputs an integer
-		while (!scanner.hasNextInt()) {
-			System.out.println("--- Please Enter a Valid Integer ---");
-			scanner.next();
-		}
+		if (!scanner.hasNextInt())
+			return 1;
 		
 		return scanner.nextInt();
 	}
