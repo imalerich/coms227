@@ -141,7 +141,7 @@ public class GameState
 		}
 		
 		// switch the offensive team
-		switchOffensive(FIELD_LENGTH - ballLocation);
+		switchOffensive(STARTING_POSITION);
 	}
 	
 	/**
