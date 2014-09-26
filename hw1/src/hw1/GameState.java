@@ -4,18 +4,19 @@ package hw1;
  * This class encapsulates the logic and state for a simplified
  * game of American football.  
  * 
- * @author Ian Malerich
+ * @author 
+ * 	Ian Malerich
  */
 public class GameState
 {
 	/**
-	 * Number of points awarded for a touchdown.
+	 * Number of points awarded for a touch down.
 	 */
 	public static final int TOUCHDOWN_POINTS = 6;
   
 	/**
 	 * Number of points awarded for a successful extra point attempt
-	 * after a touchdown.
+	 * after a touch down.
 	 */
 	public static final int EXTRA_POINTS = 1;
   
@@ -78,7 +79,37 @@ public class GameState
 	}
 	
 	/**
-	 * Records the result of an extra point attempt, adding EXTRA_POINTS points if the attempt was successful. 
+	 * Add input score to the current offensive team.
+	 * @param points
+	 * 	total points scored by offensive team
+	 */
+	private void addScore(int points)
+	{
+		if (currentOffense == 0)
+		{
+			score0 += points;
+		} else {
+			score1 += points;
+		}
+	}
+	
+	/**
+	 * Switch the offensive team.
+	 * @param position
+	 * 	the position away from their goal that the defending team gets the ball
+	 */
+	private void switchOffensive(int position)
+	{
+		currentOffense = 1 - currentOffense;
+		ballLocation = position;
+		currentDown = 1;
+		yardsToFirstDown = 10;
+		
+		// assert that the balls Location is valid
+		ballLocation = Math.min(ballLocation, FIELD_LENGTH);
+	}
+	
+	/** * Records the result of an extra point attempt, adding EXTRA_POINTS points if the attempt was successful. 
 	 * Whether or not the attempt is successful, the defense gets the ball and starts with a first down, 
 	 * STARTING_POSITION yards from the goal line.
 	 * @param success
@@ -89,44 +120,28 @@ public class GameState
 		if (success)
 		{
 			// the point was successful, award the point
-			if (currentOffense == 0)
-			{
-				score0 += EXTRA_POINTS;
-			} else {
-				score1 += EXTRA_POINTS;
-			}
+			addScore(EXTRA_POINTS);
 		}
 		
 		// switch the offensive team
-		currentOffense = 1 - currentOffense;
-		ballLocation = STARTING_POSITION;
-		currentDown = 1;
-		yardsToFirstDown = 10;
+		switchOffensive(STARTING_POSITION);
 	}
 	
 	/**
 	 * Records the result of a field goal attempt, adding FIELD_GOAL_POINTS points if the field goal was successful.
 	 * @param success
-	 * 	true if the field goal was succesful, false otherwise
+	 * 	true if the field goal was successful, false otherwise
 	 */
 	public void fieldGoal(boolean success)
 	{
 		if (success)
 		{
 			// the field goal was successful, award the point
-			if (currentOffense == 0)
-			{
-				score0 += FIELD_GOAL_POINTS;
-			} else {
-				score1 += FIELD_GOAL_POINTS;
-			}
+			addScore(FIELD_GOAL_POINTS);
 		}
 		
 		// switch the offensive team
-		currentOffense = 1 - currentOffense;
-		ballLocation = FIELD_LENGTH - ballLocation;
-		currentDown = 1;
-		yardsToFirstDown = 10;
+		switchOffensive(FIELD_LENGTH - ballLocation);
 	}
 	
 	/**
@@ -201,28 +216,19 @@ public class GameState
 		// decrement ball location by the distance towards the offensive goal
 		ballLocation -= yards;
 		
-		// swap the orientation of for the defensive team, then assert that they are not greater then FIELD_LENGTH
-		ballLocation = FIELD_LENGTH - ballLocation;
-		if (ballLocation > FIELD_LENGTH)
-		{
-			ballLocation = FIELD_LENGTH;
-		}
-		
 		// switch the current offensive team
-		currentOffense = 1 - currentOffense;
-		currentDown = 1;
-		yardsToFirstDown = 10;
+		switchOffensive(FIELD_LENGTH - ballLocation);
 	}
 	
 	/**
 	 * Records the result of advancing the ball the given number of yards, possibly resulting in a first down, a 
-	 * touchdown, or a turnover.
+	 * touch down, or a turnover.
 	 * 
-	 * 	+ If the resulting location of the ball is less than zero, then a touchdown is awarded and the offense gets TOUCHDOWN_POINTS points added. 
-	 *		 	(However, after a touchdown, the defending team does not get the ball and begin a first down until 
+	 * 	+ If the resulting location of the ball is less than zero, then a touch down is awarded and the offense gets TOUCHDOWN_POINTS points added. 
+	 *		 	(However, after a touch down, the defending team does not get the ball and begin a first down until 
 	 *			extraPoint is called.)
 	 * 	+ If the ball has been advanced 10 or more yards since the first down, the offense keeps the ball and gets a first down.
-	 * 	+ If it is the fourth down, there is no touchdown, and the ball has not been advanced 10 yards or more, then the defense takes 
+	 * 	+ If it is the fourth down, there is no touch down, and the ball has not been advanced 10 yards or more, then the defense takes 
 	 * 			possession at the ball's current location.
 	 * 	+ Otherwise, the offense stays in control and the down increases by 1. 
 	 * 
@@ -236,31 +242,32 @@ public class GameState
 		ballLocation -= yards;
 		yardsToFirstDown -= yards;
 		
-		// check if a touchdown occurs
+		// assert that the ball has not moved beyond the goal line
+		if (ballLocation > FIELD_LENGTH)
+		{
+			yardsToFirstDown -= (ballLocation - FIELD_LENGTH);
+			ballLocation = FIELD_LENGTH;
+		}
+		
+		// check if a touch down occurs
 		if (ballLocation < 0)
 		{
 			// add the score for the appropriate team
-			if (currentOffense == 0)
-			{
-				score0 += TOUCHDOWN_POINTS;
-			} else {
-				score1 += TOUCHDOWN_POINTS;
-			}
+			addScore(TOUCHDOWN_POINTS);
 		}
 		
 		// check if a first down occurs
-		if (yardsToFirstDown < 0)
+		if (yardsToFirstDown <= 0)
 		{
 			yardsToFirstDown = 10;
 			currentDown = 1;
 		}
 		
-		// check if the 4th down just occured (and failed)
+		// check if the 4th down just occurred (and failed)
 		if (currentDown == 4)
 		{
-			// swap the orientation of the ball location as the defending team takes posession
-			ballLocation = FIELD_LENGTH - ballLocation;
-			currentOffense = 1 - currentOffense;
+			// swap the orientation of the ball location as the defending team takes possession
+			switchOffensive(FIELD_LENGTH - ballLocation);
 		}
 		
 		// increment the current down
