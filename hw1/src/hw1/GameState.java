@@ -138,10 +138,12 @@ public class GameState
 		{
 			// the field goal was successful, award the point
 			addScore(FIELD_GOAL_POINTS);
+			switchOffensive(STARTING_POSITION);
+		} else {
+			
+			// else the point was failed, switch teams, but do not start at STARTING_POSITION
+			switchOffensive(FIELD_LENGTH - ballLocation);
 		}
-		
-		// switch the offensive team
-		switchOffensive(STARTING_POSITION);
 	}
 	
 	/**
@@ -210,7 +212,7 @@ public class GameState
 	 */
 	public void punt(int yards)
 	{
-		// yards must be greater than 0
+		// yards must be greater than or equal to 0
 		if (yards < 0) return;
 		
 		// decrement ball location by the distance towards the offensive goal
@@ -241,6 +243,7 @@ public class GameState
 		// move the ball yards and apply that distance towards the distance to the first yard line
 		ballLocation -= yards;
 		yardsToFirstDown -= yards;
+		currentDown ++;
 		
 		// assert that the ball has not moved beyond the goal line
 		if (ballLocation > FIELD_LENGTH)
@@ -264,13 +267,10 @@ public class GameState
 		}
 		
 		// check if the 4th down just occurred (and failed)
-		if (currentDown == 4)
+		if (currentDown > 4)
 		{
 			// swap the orientation of the ball location as the defending team takes possession
 			switchOffensive(FIELD_LENGTH - ballLocation);
 		}
-		
-		// increment the current down
-		currentDown++;
 	}
 }
