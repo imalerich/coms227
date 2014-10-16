@@ -17,20 +17,20 @@ public class LoopyStuff
 	public static boolean containsSubsequence(String Target, String Source)
 	{
 		// return true if the source has no length
-		if (Source.length() == 0) {
+		if (Target.length() == 0) {
 			return true;
 		}
 		
 		int index = 0;
-		for (int i=0; i<Target.length(); i++)
+		for (int i=0; i<Source.length(); i++)
 		{
 			// found the letter at Source[index] at Target[i]
-			if (Target.charAt(i) == Source.charAt(index)) {
+			if (Source.charAt(i) == Target.charAt(index)) {
 				index++;
 			}
 			
 			// all the letters were found in sequential order
-			if (index == Source.length()) {
+			if (index == Target.length()) {
 				return true;
 			}
 		}
@@ -50,7 +50,7 @@ public class LoopyStuff
 	public static boolean differByOneSwap(String S, String T)
 	{
 		// if the strings are equal, or do not have the same length, return false
-		if (S.equals(T) || S.length() != S.length()) {
+		if (S.equals(T) || S.length() != T.length()) {
 			return false;
 		}
 		
@@ -75,6 +75,14 @@ public class LoopyStuff
 				return false;
 			}
 		}
+		
+		// there must have been at least two differences found
+		if (diff0 < 0 || diff1 < 0)
+			return false;
+		
+		// the two differences must be adjacent
+		if (diff1 - diff0 > 1)
+			return false;
 		
 		if (S.charAt(diff0) == T.charAt(diff1) &&
 				S.charAt(diff1) == T.charAt(diff0))
@@ -117,8 +125,8 @@ public class LoopyStuff
 	 */
 	public static int findSecondLargest(String Nums)
 	{
-		int max = 0;
-		int nxtMax = 0;
+		int max = Integer.MIN_VALUE;
+		int nxtMax = Integer.MIN_VALUE;
 		
 		Scanner s = new Scanner(Nums);
 		while (s.hasNextInt()) 
@@ -179,10 +187,6 @@ public class LoopyStuff
 			System.out.print('-');
 		}
 		System.out.print('*');
-
-		for (int i=0; i<Spaces/2; i++) {
-			System.out.print(' ');
-		}
 
 		// new line
 		System.out.println();
