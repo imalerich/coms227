@@ -5,6 +5,6 @@ public class StringTest
 	public static void main(String[] args) 
 	{
 		// should return 'ready'
-		System.out.println( StringUtil.fixSpelling("bleu") );
+		System.out.println( StringUtil.fixSpelling("raedy") );
 	}
 }
