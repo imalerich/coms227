@@ -1,0 +1,32 @@
+1 package lab7;
+2 
+3 import java.io.File;
+4 import java.io.FileNotFoundException;
+5 import java.io.PrintWriter;
+6 import java.util.Scanner;
+7 
+8 public class LineNumberer 
+9 {
+10 	public static void main(String[] args) throws FileNotFoundException
+11 	{
+12 		//File in = new File("story.txt");
+13 		File in = new File("src/lab7/LineNumberer.java");
+14 		File out = new File(in.getName()+".out");
+15 		
+16 		Scanner s = new Scanner(in);
+17 		PrintWriter output = new PrintWriter(out);
+18 		int linecount = 1;
+19 		
+20 		while (s.hasNextLine())
+21 		{
+22 			String line = s.nextLine();
+23 			System.out.println(linecount + " " + line);
+24 			output.println(linecount + " " + line);
+25 			linecount++;
+26 		}
+27 		
+28 		System.out.println("Done");
+29 		output.close();
+30 		s.close();
+31 	}
+32 }
