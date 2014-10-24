@@ -13,8 +13,8 @@ public class InputPlotter
 	{
 		PolylinePlotter plotter = new PolylinePlotter();
 		
-		File f = new File("test.txt");
-		//File f = new File("hello.txt");
+		//File f = new File("test.txt");
+		File f = new File("hello.txt");
 		Scanner s = new Scanner(f);
 		while (s.hasNextLine())
 		{
@@ -37,20 +37,6 @@ public class InputPlotter
 		return true;
 	}
 	
-	private static int WordCount(String Line)
-	{
-		Scanner tmp = new Scanner(Line);
-		
-		int count = 0;
-		while (tmp.hasNext())
-		{
-			tmp.next();
-			count++;
-		}
-		
-		return count;
-	}
-	
 	private static Point GetPoint(Scanner S)
 	{
 		return new Point( S.nextInt(), S.nextInt() );
@@ -62,12 +48,10 @@ public class InputPlotter
 			return;
 		}
 		
-		int wordcount = WordCount(Line);
 		Scanner tmp = new Scanner(Line);
 		int width = 1;
 		
-		if (wordcount%2 == 0)
-		{
+		if (tmp.hasNextInt()) {
 			width = tmp.nextInt();
 		}
 		
