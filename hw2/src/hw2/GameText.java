@@ -16,6 +16,15 @@ package hw2;
  */
 public class GameText
 {  
+	/**
+	 * The hidden phrase, not displayed to the end user.
+	 */
+	private String hiddenText;
+	
+	/**
+	 * The displayed phrase, with '*' covering non visible characters.
+	 */
+	private char[] displayedText;
 
 	/**
 	 * Constructs a GameText using the given string as the hidden text.
@@ -26,7 +35,22 @@ public class GameText
 	 */
 	public GameText(String phrase)
 	{
-		// TODO
+		// store the hidden phrase
+		hiddenText = phrase.toUpperCase();
+		
+		// create a character array for the displayed text
+		displayedText = new char[hiddenText.length()];
+		
+		// construct the displayed text array
+		for (int i=0; i<displayedText.length; i++) {
+			// if the this character in hiddenText is alphabetic, set the displayed to '*'
+			if (Character.isAlphabetic(hiddenText.charAt(i))) {
+				displayedText[i] = '*';
+			} else {
+				// else set the displayed non-alphabetic character
+				displayedText[i] = hiddenText.charAt(i);
+			}
+		}
 	}
 
 	/**
@@ -36,8 +60,7 @@ public class GameText
 	 */
 	public String getHiddenText()
 	{
-		// TODO
-		return null;
+		return hiddenText;
 	} 
 
 	/**
@@ -49,8 +72,7 @@ public class GameText
 	 */
 	public char[] getDisplayedText()
 	{
-		// TODO
-		return null;
+		return displayedText;
 	}
 
 	/**
@@ -61,8 +83,15 @@ public class GameText
 	 */
 	public int countHiddenLetters()
 	{
-		// TODO
-		return 0;
+		int count = 0;
+		for (int i=0; i<displayedText.length; i++) {
+			// count each occurrence of the '*' character
+			if (displayedText[i] == '*') {
+				count++;
+			}
+		}
+		
+		return count;
 	}
 
 	/**
@@ -75,8 +104,15 @@ public class GameText
 	 */
 	public int countHiddenConsonants()
 	{
-		// TODO
-		return 0;
+		int count = 0;
+		for (int i=0; i<displayedText.length; i++) {
+			// count each hidden character that is not a vowel in the hiddenText
+			if (displayedText[i] == '*' && !isVowel(hiddenText.charAt(i))) {
+				count++;
+			}
+		}
+		
+		return count;
 	}
 
 	/**
@@ -90,8 +126,15 @@ public class GameText
 	 */
 	public int letterCount(char ch)
 	{
-		// TODO
-		return 0;
+		int count = 0;
+		for (int i=0; i<hiddenText.length(); i++) {
+			// if the character exists in hiddenText, increment the count
+			if (hiddenText.charAt(i) == Character.toUpperCase(ch)) {
+				count++;
+			}
+		}
+		
+		return count;
 	}
 
 	/**
@@ -104,7 +147,13 @@ public class GameText
 	 */
 	public void update(char ch)
 	{
-		// TODO
+		for (int i=0; i<hiddenText.length(); i++) {
+			// if the the character exists in hiddenText
+			if (hiddenText.charAt(i) == Character.toUpperCase(ch)) {
+				// set that character as visible
+				displayedText[i] = Character.toUpperCase(ch);
+			}
+		}
 	}
 
 	/**
@@ -112,7 +161,7 @@ public class GameText
 	 */
 	public void updateAllRemaining()
 	{
-		// TODO
+		displayedText = hiddenText.toCharArray();
 	}
 
 	/**

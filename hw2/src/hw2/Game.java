@@ -20,6 +20,36 @@ public class Game
 	 * Cost to buy a vowel.
 	 */
 	public static final int VOWEL_COST = 250;
+	
+	/**
+	 * The players names.
+	 */
+	private Player[] players;
+	
+	/**
+	 * The index of the players whose turn it currently it.
+	 */
+	private int currentTurn;
+	
+	/**
+	 * The GameText for the current round.
+	 */
+	private GameText roundText;
+	
+	/**
+	 * The GameWheel object for the Game.
+	 */
+	private GameWheel wheel;
+	
+	/**
+	 * True if the current round is over.
+	 */
+	private boolean isRoundOver;
+	
+	/**
+	 * Whether or not the current player needs to spin the wheel.
+	 */
+	private boolean needsSpin;
 
 	/**
 	 * Constructs a new game instance.  The number of players
@@ -31,7 +61,16 @@ public class Game
 	 */
 	public Game(String[] playerNames)
 	{
-		// TODO
+		// create the players array and initialize it
+		players = new Player[playerNames.length];
+		for (int i=0; i<players.length; i++) {
+			players[i] = new Player(playerNames[i]);
+		}
+		
+		currentTurn = 0;
+		wheel = new GameWheel();
+		isRoundOver = true;
+		needsSpin = false;
 	}
 
 	/**
@@ -46,7 +85,15 @@ public class Game
 	 */
 	public void startRound(int whoseTurn, GameText secretPhrase)
 	{
-		// TODO
+		// clear the round balance of each player
+		for (Player p : players) {
+			p.clearRoundBalance();
+		}
+		
+		currentTurn = whoseTurn;
+		roundText = secretPhrase;
+		isRoundOver = false;
+		needsSpin = true;
 	}
 
 	/**
@@ -56,8 +103,7 @@ public class Game
 	 */
 	public int whoseTurn()
 	{
-		// TODO
-		return 0;
+		return currentTurn;
 	}
 
 	/**
@@ -68,8 +114,7 @@ public class Game
 	 */
 	public boolean needsSpin()
 	{
-		// TODO
-		return false;
+		return needsSpin;
 	}
 
 	/**
@@ -82,8 +127,7 @@ public class Game
 	 */
 	public int getRoundBalance(int player)
 	{
-		// TODO
-		return 0;
+		return players[player].getRoundBalance();
 	}
 
 	/**
@@ -96,8 +140,7 @@ public class Game
 	 */
 	public int getGameBalance(int player)
 	{
-		// TODO
-		return 0;
+		return players[player].getGameBalance();
 	}
 
 	/**
@@ -109,8 +152,7 @@ public class Game
 	 */
 	public String getPlayerName(int player)
 	{
-		// TODO
-		return null;
+		return players[player].getName();
 	}
 
 	/**
@@ -120,8 +162,7 @@ public class Game
 	 */
 	public int getNumPlayers()
 	{
-		// TODO
-		return 0;
+		return players.length;
 	}
 
 	/**
@@ -131,8 +172,7 @@ public class Game
 	 */
 	public int getWheelValue()
 	{
-		// TODO
-		return 0;
+		return wheel.getSegmentValue();
 	}
 
 	/**
@@ -142,8 +182,7 @@ public class Game
 	 */
 	public int getWheelRotation()
 	{
-		// TODO
-		return 0;
+		return wheel.getRotation();
 	}
 
 	/**
@@ -153,8 +192,7 @@ public class Game
 	 */
 	public boolean roundOver()
 	{
-		// TODO
-		return false;
+		return isRoundOver;
 	}
 
 	/**
@@ -165,8 +203,7 @@ public class Game
 	 */
 	public char[] getDisplay()
 	{
-		// TODO
-		return null;
+		return roundText.getDisplayedText();
 	}
 
 	/**
@@ -177,8 +214,7 @@ public class Game
 	 */
 	public String getAnswer()
 	{
-		// TODO
-		return null;
+		return roundText.getHiddenText();
 	}
 
 	/**
@@ -194,8 +230,16 @@ public class Game
 	 */
 	public int guessConsonant(char ch)
 	{
-		// TODO
-		return 0;
+		int occurrences = roundText.letterCount(ch);
+		if (occurrences != 0) {
+			roundText.update(ch);
+			players[currentTurn].addToRoundBalance(occurrences * getWheelValue());
+			needsSpin = true;
+		} else {
+			nextTurn();
+		}
+		
+		return occurrences;
 	}
 
 	/**
@@ -224,8 +268,26 @@ public class Game
 	 */
 	public boolean guessPhrase(String guess)
 	{
-		// TODO
-		return false;
+		// check if they guessed the phrase correctly
+		if (guess.toUpperCase() == getAnswer()) {
+			players[currentTurn].addToRoundBalance(roundText.countHiddenConsonants()*getWheelValue());
+			roundText.updateAllRemaining();
+			
+			// reset all players round balance except the winners
+			for (int i=0; i<getNumPlayers(); i++) {
+				if (i != currentTurn) {
+					players[i].clearRoundBalance();
+				}
+			}
+			
+			players[currentTurn].winRound();
+			isRoundOver = true;
+			
+			return true;
+		} else {
+			nextTurn();
+			return false;
+		}
 	}
 
 	/**
@@ -241,8 +303,16 @@ public class Game
 	 */
 	public int buyVowel(char ch)
 	{
-		// TODO
-		return 0;
+		int vowelCount = roundText.letterCount(ch);
+		if (vowelCount > 0) {
+			roundText.update(ch);
+			players[currentTurn].subtractFromRoundBalance(VOWEL_COST);
+			needsSpin = true;
+		} else {
+			nextTurn();
+		}
+		
+		return vowelCount;
 	} 
 
 	/**
@@ -256,8 +326,24 @@ public class Game
 	 */
 	public void spinWheel(int degrees)
 	{
-		// TODO
+		wheel.spin(degrees);
+		
+		// check for special cases of the wheels outcome
+		if (wheel.getSegmentValue() == GameWheel.BANKRUPT) {
+			players[currentTurn].clearRoundBalance();
+			nextTurn();
+		} else if (wheel.getSegmentValue() == GameWheel.LOSE_A_TURN) {
+			nextTurn();
+		}
 	}
 
-
+	/**
+	 * Move the current turn to the next player.
+	 */
+	private void nextTurn()
+	{
+		// increment the turn and wrap to 0 if it exceeds the player count
+		currentTurn = (currentTurn + 1) % getNumPlayers();
+		needsSpin = true;
+	}
 }

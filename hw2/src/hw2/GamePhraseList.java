@@ -1,6 +1,6 @@
 package hw2;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,6 +13,10 @@ import java.util.Scanner;
  */
 public class GamePhraseList
 {
+	/**
+	 * Store the phrases from the file into a dynamic array.
+	 */
+	private ArrayList<String> phrases = new ArrayList<String>();
 
 	/**
 	 * Constructs a GamePhraseList that will select phrases from the given file.
@@ -23,7 +27,15 @@ public class GamePhraseList
 	 */
 	public GamePhraseList(String givenFilename) throws FileNotFoundException
 	{
-		// TODO
+		File f = new File(givenFilename);
+		Scanner s = new Scanner(f);
+		
+		// read each phrase into the dynamic array
+		while (s.hasNextLine()) {
+			phrases.add( s.nextLine() );
+		}
+		
+		s.close();
 	}
 
 	/**
@@ -37,8 +49,7 @@ public class GamePhraseList
 	 */
 	public String getPhrase(int n)
 	{
-		// TODO
-		return null;
+		return phrases.get(n);
 	}
 
 	/**
@@ -48,8 +59,7 @@ public class GamePhraseList
 	 */
 	public int getSize()
 	{
-		// TODO
-		return 0;
+		return phrases.size();
 	}
 
 }
