@@ -84,9 +84,8 @@ public class GameText
 	public int countHiddenLetters()
 	{
 		int count = 0;
-		for (int i=0; i<displayedText.length; i++) {
-			// count each occurrence of the '*' character
-			if (displayedText[i] == '*') {
+		for (char c : displayedText) {
+			if (c == '*') {
 				count++;
 			}
 		}

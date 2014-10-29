@@ -232,10 +232,12 @@ public class Game
 	{
 		int occurrences = roundText.letterCount(ch);
 		if (occurrences != 0) {
+			// add the occurrences to the players score
 			roundText.update(ch);
 			players[currentTurn].addToRoundBalance(occurrences * getWheelValue());
 			needsSpin = true;
 		} else {
+			// if no occurrences, move to the next turn
 			nextTurn();
 		}
 		
@@ -269,7 +271,8 @@ public class Game
 	public boolean guessPhrase(String guess)
 	{
 		// check if they guessed the phrase correctly
-		if (guess.toUpperCase() == getAnswer()) {
+		if (guess.toUpperCase().equals(getAnswer())) {
+			// add the remaining consonants to the round balance
 			players[currentTurn].addToRoundBalance(roundText.countHiddenConsonants()*getWheelValue());
 			roundText.updateAllRemaining();
 			
@@ -327,6 +330,7 @@ public class Game
 	public void spinWheel(int degrees)
 	{
 		wheel.spin(degrees);
+		needsSpin = false;
 		
 		// check for special cases of the wheels outcome
 		if (wheel.getSegmentValue() == GameWheel.BANKRUPT) {
