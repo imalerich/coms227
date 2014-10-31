@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GasStation 
+public class MileageTest 
 {
 	private static ArrayList<FillUp> data = new ArrayList<FillUp>();
 	

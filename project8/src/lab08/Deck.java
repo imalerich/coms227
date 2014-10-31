@@ -42,16 +42,6 @@ public class Deck
 		init();
 	}
 
-	private void swap(int First, int Second)
-	{
-		// temporarily store the second card to be swapped
-		Card tmp = cards[Second];
-
-		// swap the position of the two cards
-		cards[Second] = cards[First];
-		cards[First] = tmp;
-	}
-
 	/**
 	 * Returns a new array containing k elements selected
 	 * at random from this deck.
@@ -92,5 +82,22 @@ public class Deck
 			index += 1;
 		}
 
+	}
+	
+	/**
+	 * Swaps the position of two cards in the deck.
+	 * @param First
+	 * 	The position of the first element to be swapped.
+	 * @param Second
+	 * 	The position of the second element to be swapped.
+	 */
+	private void swap(int First, int Second)
+	{
+		// temporarily store the second card to be swapped
+		Card tmp = cards[Second];
+
+		// swap the position of the two cards
+		cards[Second] = cards[First];
+		cards[First] = tmp;
 	}
 }
