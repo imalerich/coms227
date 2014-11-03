@@ -276,18 +276,20 @@ public class Game
 			players[currentTurn].addToRoundBalance(roundText.countHiddenConsonants()*getWheelValue());
 			roundText.updateAllRemaining();
 			
-			// reset all players round balance except the winners
+			// all losing players' round balances are set to zero
 			for (int i=0; i<getNumPlayers(); i++) {
 				if (i != currentTurn) {
 					players[i].clearRoundBalance();
 				}
 			}
 			
+			// add the players round balance to their total balance
 			players[currentTurn].winRound();
 			isRoundOver = true;
 			
 			return true;
 		} else {
+			// the guess is incorrect, next players turn
 			nextTurn();
 			return false;
 		}
@@ -306,6 +308,7 @@ public class Game
 	 */
 	public int buyVowel(char ch)
 	{
+		// check how many times the vowel 'ch' appears in the text
 		int vowelCount = roundText.letterCount(ch);
 		if (vowelCount > 0) {
 			roundText.update(ch);

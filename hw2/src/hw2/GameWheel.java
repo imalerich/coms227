@@ -93,10 +93,10 @@ public class GameWheel
 		
 		// if exact multiple of 15, subtract 1
 		if (currentAngle % SEGMENT_ANGLE == 0) {
-			--currentAngle;
+			currentAngle--;
 		}
 		
-		// wrap from 1 to 359 
+		// wrap from 1 to 359 (will not be 0, as previous statement would set to -1)
 		currentAngle %= 360;
 	}
 
