@@ -98,6 +98,11 @@ public class GameWheel
 		
 		// wrap from 1 to 359 (will not be 0, as previous statement would set to -1)
 		currentAngle %= 360;
+		
+		// make sure currentAngle is positive
+		if (currentAngle < 0) {
+			currentAngle += 360;
+		}
 	}
 
 	/**

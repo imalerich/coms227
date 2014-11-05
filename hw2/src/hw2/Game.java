@@ -286,6 +286,7 @@ public class Game
 			// add the players round balance to their total balance
 			players[currentTurn].winRound();
 			isRoundOver = true;
+			needsSpin = false;
 			
 			return true;
 		} else {

@@ -98,14 +98,12 @@ public class Player
 	}
 
 	/**
-	 * Transfers the player's round balance to the game balance
-	 * and resets the round balance to zero.
+	 * Adds the player's round balance to the game balance (without modifying the round balance).
 	 */
 	public void winRound()
 	{
-		// add the round balance to the game balance, then clear the round balance
+		// add the round balance to the game balance
 		gameBalance += roundBalance;
-		clearRoundBalance();
 	}
 
 	/**
