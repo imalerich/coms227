@@ -1,0 +1,29 @@
+//
+// prints out all primes between 1 and max, where max is
+// provided in the environment
+//
+
+n = 2;
+while (n < max)
+{
+  // look for divisors...
+  d = 2;
+  found = 0;  // we have boolean expressions, but not boolean variables
+  while (d < n / 2 && found == 0)
+  {
+    remainder = n - d * (n / d);  // we don't have a mod operator
+    if (remainder == 0)
+    {
+      found = 1;
+    }
+    else {}     // else block always required
+    d = d + 1;
+  }
+  if (found == 0)
+  {
+    // no divisors, must be prime
+    output(n);
+  }
+  else {}
+  n = n + 1;
+}
