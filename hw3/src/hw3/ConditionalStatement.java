@@ -16,6 +16,16 @@ import api.IStatement;
 public class ConditionalStatement extends ProgramElement implements IStatement
 {
 	/**
+	 * The condition to determine which statement to execute.
+	 */
+	IExpression condition;
+	
+	/**
+	 * The statements that will be executed.
+	 */
+	IStatement statements[];
+	
+	/**
 	 * Constructs a conditional statement from the given condition
 	 * and alternative actions.
 	 * @param condition
@@ -28,28 +38,33 @@ public class ConditionalStatement extends ProgramElement implements IStatement
 	public ConditionalStatement(IExpression condition, IStatement s0, IStatement s1)
 	{
 		super("Conditional", null);
-		// TODO - anything else you need
+		this.condition = condition;
+		
+		statements = new IStatement[2];
+		statements[0] = s0;
+		statements[1] = s1;
 	}
 
 	@Override
 	public void execute(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-
+		if (condition.evaluate(env) == 0) {
+			statements[1].execute(env);
+		} else {
+			statements[0].execute(env);
+		}
 	}
 
 	@Override
 	public int getNumSubElements()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return statements.length;
 	}
 
 	@Override
 	public Object getSubElement(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return statements[index];
 	}
 
 }

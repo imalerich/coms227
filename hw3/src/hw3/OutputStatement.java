@@ -46,6 +46,4 @@ public class OutputStatement extends ProgramElement implements IStatement
 	{
 		return expression;
 	}
-
-
 }

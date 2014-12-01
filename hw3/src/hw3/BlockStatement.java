@@ -60,7 +60,12 @@ public class BlockStatement extends ProgramElement implements IStatement
 	@Override
 	public Object getSubElement(int index)
 	{
-		return statements.get(index);
+		try {
+			return statements.get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.err.println("Out of bounds exception caught, returning a DefaultElement instead.");
+			return new DefaultElement();
+		}
 	}
 
 }

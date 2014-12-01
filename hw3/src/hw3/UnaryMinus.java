@@ -20,27 +20,23 @@ public class UnaryMinus extends UnaryExpression
 	public UnaryMinus(IExpression expr)
 	{
 		super("NEGATION", "-", expr);
-		// TODO - anything else you need
 	}
 
 	@Override
 	public int evaluate(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return -getExpression().evaluate(env);
 	}
 
 	@Override
 	public int getNumSubElements()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public Object getSubElement(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getExpression();
 	}
 }

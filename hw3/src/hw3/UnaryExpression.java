@@ -10,6 +10,11 @@ import api.IExpression;
 public abstract class UnaryExpression extends ProgramElement implements IExpression
 {
 	/**
+	 * The unary expression to be evaluated.
+	 */
+	IExpression expression;
+	
+	/**
 	 * Constructs a unary expression from the given sub-expression.  
 	 * @param givenName
 	 *   a name for the type of element
@@ -21,6 +26,16 @@ public abstract class UnaryExpression extends ProgramElement implements IExpress
 	protected UnaryExpression(String givenName, String givenText, IExpression expr)
 	{
 		super(givenName, givenText);
-		// TODO - anything else you need
+		expression = expr;
+	}
+	
+	/**
+	 * Get the expression stored by this unary operator.
+	 * @return
+	 * 	The expression stored.
+	 */
+	protected IExpression getExpression()
+	{
+		return expression;
 	}
 }

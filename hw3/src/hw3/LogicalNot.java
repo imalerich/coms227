@@ -22,28 +22,28 @@ public class LogicalNot extends UnaryExpression
 	public LogicalNot(IExpression expr)
 	{
 		super("NOT", "!", expr);
-		// TODO - anything else you need
 	}
 
 	@Override
 	public int evaluate(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		if (getExpression().evaluate(env) == 0) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public int getNumSubElements()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public Object getSubElement(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getExpression();
 	}
 
 }

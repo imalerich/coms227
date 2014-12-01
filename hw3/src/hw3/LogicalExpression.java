@@ -27,29 +27,21 @@ public class LogicalExpression extends BinaryExpression
 	public LogicalExpression(LogicalOp op, IExpression lhs, IExpression rhs)
 	{
 		super(op.toString(), op.getText(), lhs, rhs);
-		// TODO - anything else you need
 	}
 
 	@Override
 	public int evaluate(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		int left = getLeft().evaluate(env);
+		int right = getRight().evaluate(env);
+		
+		if (getText().equals( LogicalOp.AND.getText() )) {
+			return getInt( getBoolean(left) && getBoolean(right) );
+		} else if (getText().equals( LogicalOp.OR.getText() )) {
+			return getInt( getBoolean(left) || getBoolean(right) );
+		} else {
+			System.err.println("Error: Invalid operator recieved " + getText() + " return false.");
+			return 0;
+		}
 	}
-
-	@Override
-	public int getNumSubElements()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Object getSubElement(int index)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }

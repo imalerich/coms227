@@ -67,4 +67,36 @@ public abstract class BinaryExpression extends ProgramElement implements IExpres
 	{
 		return elements[1];
 	}
+	
+	/**
+	 * Converts an integer into an equivalent boolean.
+	 * @param value
+	 * 	The value to be converted.
+	 * @return
+	 * 	The return boolean.
+	 */
+	protected boolean getBoolean(int value)
+	{
+		if (value == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * Converts a boolean to an equivalent integer value.
+	 * @param b
+	 * 	The input boolean to be converted.
+	 * @return
+	 * 	The output integer thats converted.
+	 */
+	protected int getInt(boolean b)
+	{
+		if (b) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 }

@@ -35,42 +35,25 @@ public class RelationalExpression extends BinaryExpression
 		int right = getRight().evaluate(env);
 		
 		if (getText().equals( RelationalOp.EQ.getText() )) {
-			return GetIntValue(left == right);
+			return getInt(left == right);
 			
 		} else if (getText().equals( RelationalOp.NEQ.getText() )) {
-			return GetIntValue(left != right);
+			return getInt(left != right);
 			
 		} else if (getText().equals( RelationalOp.LT.getText() )) {
-			return GetIntValue(left < right);
+			return getInt(left < right);
 			
 		} else if (getText().equals( RelationalOp.GT.getText() )) {
-			return GetIntValue(left > right);
+			return getInt(left > right);
 			
 		} else if (getText().equals( RelationalOp.LTE.getText() )) {
-			return GetIntValue(left <= right);
+			return getInt(left <= right);
 			
 		} else if (getText().equals( RelationalOp.GTE.getText() )) {
-			return GetIntValue(left >= right);
+			return getInt(left >= right);
 			
 		} else {
 			System.err.println("Error: Invalid operation recieved " + getText() + " returning false.");
-			return 0;
-		}
-	}
-	
-	/**
-	 * Converts a boolean to an integer representation.
-	 * @param b
-	 * 	Boolean value to be converted.
-	 * @return
-	 * 	1 if b is true. 
-	 *	0 if b is false.
-	 */
-	private int GetIntValue(boolean b)
-	{
-		if (b == true) {
-			return 1;
-		} else {
 			return 0;
 		}
 	}
