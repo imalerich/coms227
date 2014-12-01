@@ -23,10 +23,21 @@ public class Example
 
 	public static void main(String[] args)
 	{
-		// example1();
-		// example2();
-		// example3();
+		System.out.println(" --- Example 1 --- ");
+		example1();
+		System.out.println();
+		
+		System.out.println(" --- Example 2 --- ");
+		example2();
+		System.out.println();
+		
+		System.out.println(" --- Example 3 --- ");
+		example3();
+		System.out.println();
+		
+		System.out.println(" --- Example 4 --- ");
 		example4();
+		System.out.println();
 	}
 
 	private static void example1()
@@ -49,7 +60,7 @@ public class Example
 		System.out.println(aProduct.evaluate(null)); // expected 20
 
 		// optionally, take a look at the resulting elements using the viewer
-		TreeViewer.start(aProduct); 
+		// TreeViewer.start(aProduct); 
 	}
 
 	private static void example2()
@@ -77,7 +88,6 @@ public class Example
 
 		// Then evaluate the expression with respect to the new environment 
 		System.out.println(newExpr.evaluate(env));  // expected 37
-
 	}
 
 	private static void example3()

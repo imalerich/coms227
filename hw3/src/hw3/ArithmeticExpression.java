@@ -14,11 +14,6 @@ import api.IExpression;
 public class ArithmeticExpression extends BinaryExpression
 {
 	/**
-	 * The arithmetic operation to be performed on the left hand and right hand side.
-	 */
-	private ArithmeticOp operation;
-
-	/**
 	 * Constructs a binary expression from the given sub-expressions.  This constructor
 	 * does not check whether the given expressions are arithmetic expressions.
 	 * @param op
@@ -31,32 +26,24 @@ public class ArithmeticExpression extends BinaryExpression
 	public ArithmeticExpression(ArithmeticOp op, IExpression lhs, IExpression rhs)
 	{
 		super(op.toString(), op.getText(), lhs, rhs);
-		operation = op;
 	}
 
 	@Override
 	public int evaluate(IEnvironment env)
 	{
-		// convert the operation to a char so we can use a switch statement
-		char optAsChar = operation.getText().toCharArray()[0];
 		int left = getLeft().evaluate(env);
 		int right = getRight().evaluate(env);
 		
-		switch (optAsChar) {
-		case '+':
+		if (getText().equals( ArithmeticOp.PLUS.getText() )) {
 			return left + right;
-			
-		case '-':
+		} else if (getText().equals( ArithmeticOp.MINUS.getText() )) {
 			return left - right;
-			
-		case '*':
+		} else if (getText().equals( ArithmeticOp.TIMES.getText() )) {
 			return left * right;
-			
-		case '/':
+		} else if (getText().equals( ArithmeticOp.DIV.getText() )) {
 			return left / right;
-			
-		default:
-			System.err.println("Invalid arithmetic option " + optAsChar + " defaulting to 0");
+		} else {
+			System.err.println("Error: Invalid operation recieved " + getText() + " returning 0");
 			return 0;
 		}
 	}

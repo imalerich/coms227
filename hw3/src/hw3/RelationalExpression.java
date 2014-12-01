@@ -26,29 +26,52 @@ public class RelationalExpression extends BinaryExpression
 	public RelationalExpression(RelationalOp op, IExpression lhs, IExpression rhs)
 	{
 		super(op.toString(), op.getText(), lhs, rhs);
-		// TODO - anything else you need
 	}
 
 	@Override
 	public int evaluate(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		int left = getLeft().evaluate(env);
+		int right = getRight().evaluate(env);
+		
+		if (getText().equals( RelationalOp.EQ.getText() )) {
+			return GetIntValue(left == right);
+			
+		} else if (getText().equals( RelationalOp.NEQ.getText() )) {
+			return GetIntValue(left != right);
+			
+		} else if (getText().equals( RelationalOp.LT.getText() )) {
+			return GetIntValue(left < right);
+			
+		} else if (getText().equals( RelationalOp.GT.getText() )) {
+			return GetIntValue(left > right);
+			
+		} else if (getText().equals( RelationalOp.LTE.getText() )) {
+			return GetIntValue(left <= right);
+			
+		} else if (getText().equals( RelationalOp.GTE.getText() )) {
+			return GetIntValue(left >= right);
+			
+		} else {
+			System.err.println("Error: Invalid operation recieved " + getText() + " returning false.");
+			return 0;
+		}
 	}
-
-	@Override
-	public int getNumSubElements()
+	
+	/**
+	 * Converts a boolean to an integer representation.
+	 * @param b
+	 * 	Boolean value to be converted.
+	 * @return
+	 * 	1 if b is true. 
+	 *	0 if b is false.
+	 */
+	private int GetIntValue(boolean b)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		if (b == true) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
-
-	@Override
-	public Object getSubElement(int index)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }

@@ -14,6 +14,16 @@ import api.IStatement;
 public class LoopStatement extends ProgramElement implements IStatement
 {
 	/**
+	 * The conditional for the loop.
+	 */
+	IExpression condition;
+	
+	/**
+	 * The statement to be expected within the loop.
+	 */
+	IStatement statement;
+	
+	/**
 	 * Constructs a loop statement from the given condition and body
 	 * @param condition
 	 *   expression for the loop condition
@@ -23,29 +33,28 @@ public class LoopStatement extends ProgramElement implements IStatement
 	public LoopStatement(IExpression condition, IStatement s)
 	{
 		super("Loop", null);
-		// TODO - anything else you need
+		
+		this.condition = condition;
+		statement = s;
 	}
 
 	@Override
 	public void execute(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-
+		while (condition.evaluate(env) == 1) {
+			statement.execute(env);
+		}
 	}
 
 	@Override
 	public int getNumSubElements()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Object getSubElement(int index)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 }

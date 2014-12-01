@@ -1,5 +1,8 @@
 package hw3;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import api.IEnvironment;
 import api.IStatement;
 
@@ -14,12 +17,17 @@ import api.IStatement;
 public class BlockStatement extends ProgramElement implements IStatement
 {
 	/**
+	 * List of all statements in this block.
+	 */
+	private ArrayList<IStatement> statements;
+	
+	/**
 	 * Constructs an empty sequence of statements.
 	 */
 	public BlockStatement()
 	{
 		super("Block", null);
-		// TODO - anything else you need
+		statements = new ArrayList<IStatement>();
 	}
 
 	/**
@@ -30,28 +38,29 @@ public class BlockStatement extends ProgramElement implements IStatement
 	 */
 	public void addStatement(IStatement s)
 	{
-		// TODO
+		statements.add(s);
 	}
 
 	@Override
 	public void execute(IEnvironment env)
 	{
-		// TODO Auto-generated method stub
-
+		// execute all statements in the order they were added
+		for (Iterator<IStatement> i = statements.iterator(); i.hasNext(); )
+		{
+			i.next().execute(env);
+		}
 	}
 
 	@Override
 	public int getNumSubElements()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return statements.size();
 	}
 
 	@Override
 	public Object getSubElement(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return statements.get(index);
 	}
 
 }
