@@ -7,40 +7,45 @@ import api.IStatement;
 /**
  * Statement type whose execution causes the value of an expression to
  * be printed to the console.
+ * 
+ * @author Ian Malerich
  */
 public class OutputStatement extends ProgramElement implements IStatement
 {
-  /**
-   * Constructs an output statement for the given expression.
-   * @param expr
-   *   given expression
-   */
-  public OutputStatement(IExpression expr)
-  {
-    super("Output", null);
-    // TODO - anything else you need
-  }
+	/**
+	 * The expression that will be evaluated and sent as output.
+	 */
+	IExpression expression;
+	
+	/**
+	 * Constructs an output statement for the given expression.
+	 * @param expr
+	 *   given expression
+	 */
+	public OutputStatement(IExpression expr)
+	{
+		super("Output", null);
+		expression = expr;
+	}
 
-  @Override
-  public void execute(IEnvironment env)
-  {
-    // TODO Auto-generated method stub
-    
-  }
+	@Override
+	public void execute(IEnvironment env)
+	{
+		System.out.println( expression.evaluate(env) );
 
-  @Override
-  public int getNumSubElements()
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+	}
 
-  @Override
-  public Object getSubElement(int index)
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
+	@Override
+	public int getNumSubElements()
+	{
+		return 1;
+	}
+
+	@Override
+	public Object getSubElement(int index)
+	{
+		return expression;
+	}
+
 
 }

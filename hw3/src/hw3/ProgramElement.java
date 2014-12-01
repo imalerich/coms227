@@ -19,81 +19,84 @@ import parser.ViewerNode;
  * <code>getSubElement(0)</code> returns the expression on the left-hand
  * side, and <code>getSubElement(1)</code> returns the expression
  * on the right-hand side.
+ * 
+ * @author Ian Malerich
+ * 
  */
 public abstract class ProgramElement implements ViewerNode
 {
-  /**
-   * A name for this element type.
-   */
-  private String name;
-  
-  /**
-   * A text representation of this element.
-   */
-  private String text;
-  
-  /**
-   * Constructs an element with the given type name and text representation.
-   * @param givenName
-   *   name for this element type
-   * @param givenText
-   *   text representation of this element
-   */
-  protected ProgramElement(String givenName, String givenText)
-  {
-    if (givenName == null)
-    {
-      givenName = "";
-    }
-    if (givenText == null)
-    {
-      givenText = "";
-    }
-    name = givenName;
-    text = givenText;
-  }
-  
-  /**
-   * Returns the name for this element type.
-   */
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-  
-  /**
-   * Returns the text representation of this element type.
-   */
-  @Override
-  public String getText()
-  {
-    return text;
-  }
-  
-  @Override
-  public String toString()
-  {
-    String desc = name + " " + text;
-    if (text.length() == 0)
-    {
-      desc += "(" + getNumSubElements() + ")";
-    }
-    return desc;
-    
-  }
-  
-  /**
-   * Returns the number of direct subelements of this one.
-   */
-  @Override
-  public abstract int getNumSubElements();
-  
-  /**
-   * Returns the subelement at the given index, or
-   * an instance of <code>DefaultElement</code> if the
-   * given index is not valid for this element.
-   */
-  @Override
-  public abstract Object getSubElement(int index);
+	/**
+	 * A name for this element type.
+	 */
+	private String name;
+
+	/**
+	 * A text representation of this element.
+	 */
+	private String text;
+
+	/**
+	 * Constructs an element with the given type name and text representation.
+	 * @param givenName
+	 *   name for this element type
+	 * @param givenText
+	 *   text representation of this element
+	 */
+	protected ProgramElement(String givenName, String givenText)
+	{
+		if (givenName == null)
+		{
+			givenName = "";
+		}
+		if (givenText == null)
+		{
+			givenText = "";
+		}
+		name = givenName;
+		text = givenText;
+	}
+
+	/**
+	 * Returns the name for this element type.
+	 */
+	@Override
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * Returns the text representation of this element type.
+	 */
+	@Override
+	public String getText()
+	{
+		return text;
+	}
+
+	@Override
+	public String toString()
+	{
+		String desc = name + " " + text;
+		if (text.length() == 0)
+		{
+			desc += "(" + getNumSubElements() + ")";
+		}
+		return desc;
+
+	}
+
+	/**
+	 * Returns the number of direct subelements of this one.
+	 */
+	@Override
+	public abstract int getNumSubElements();
+
+	/**
+	 * Returns the subelement at the given index, or
+	 * an instance of <code>DefaultElement</code> if the
+	 * given index is not valid for this element.
+	 */
+	@Override
+	public abstract Object getSubElement(int index);
 }

@@ -5,39 +5,43 @@ import api.IEnvironment;
 /**
  * Expression type representing a literal integer value.
  * This element has no subelements.
+ * 
+ * @author Ian Malerich
  */
 public class Literal extends ValueExpression
 {
-  /**
-   * Constructs a literal with the given value.
-   * @param value
-   *   int value for this litera.
-   */
-  public Literal(int value)
-  {
-    super("Int", "" + value);
-    // TODO - anything else you need
-  }
+	/**
+	 * Value stored by the literal
+	 */
+	private int val;
+	
+	/**
+	 * Constructs a literal with the given value.
+	 * @param value
+	 *   int value for this literal.
+	 */
+	public Literal(int value)
+	{
+		super("Int", "" + value);
+		val = value;
+	}
 
-  @Override
-  public int evaluate(IEnvironment env)
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+	@Override
+	public int evaluate(IEnvironment env)
+	{
+		return val;
+	}
 
-  @Override
-  public int getNumSubElements()
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+	@Override
+	public int getNumSubElements()
+	{
+		return 0;
+	}
 
-  @Override
-  public Object getSubElement(int index)
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
+	@Override
+	public Object getSubElement(int index)
+	{
+		return null;
+	}
 
 }
