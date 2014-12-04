@@ -1,6 +1,7 @@
 package lab11;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Recursion 
 {
@@ -24,6 +25,15 @@ public class Recursion
 		
 		System.out.println("-----------------------------------------");
 		System.out.println(getDirectorySize(new File("src/lab11/")));
+		
+		System.out.println("-----------------------------------------");
+		ArrayList<String> names = getJavaFiles(new File("../"));
+		System.out.println(names.toString());
+		
+		System.out.println("-----------------------------------------");
+		names = getJavaFiles(new File("src/lab11/"));
+		System.out.println(names.toString());
+		System.out.println("-----------------------------------------");
 	}
 	
 	public static int power(int x, int p)
@@ -68,17 +78,52 @@ public class Recursion
 	
 	public static long getDirectorySize(File d)
 	{
-		if (d.isFile()) {
-			return d.length();
+		File[] D = {d};
+		return getDirectorySize(D, 0);
+	}
+	
+	public static long getDirectorySize(File[] d, int index)
+	{
+		if (index == d.length) {
+			return 0;
 		}
 		
-		int length = 0;
-		if (d.isDirectory()) {
-			for (File f : d.listFiles()) {
-				length += getDirectorySize(f);
+		if (d[index].isFile()) {
+			// d[index] is a file
+			return d[index].length() + getDirectorySize(d, index+1);
+		} else {
+			// d[index] is a directory
+			return getDirectorySize(d[index].listFiles(), 0) + getDirectorySize(d, index+1);
+		}
+	}
+	
+	public static ArrayList<String> getJavaFiles(File d)
+	{
+		ArrayList<String> names = new ArrayList<String>();
+		
+		File[] D = {d};
+		getJavaFiles(D, names, 0);
+		return names;
+	}
+	
+	public static void getJavaFiles(File[] d, ArrayList<String> names, int index)
+	{
+		if (index == d.length) {
+			return;
+		}
+		
+		if (d[index].isFile()) {
+			// d[index] is a file
+			if (d[index].getName().endsWith(".java")) {
+				names.add(d[index].getName());
 			}
+			
+		} else {
+			//d[index] is a directory
+			getJavaFiles(d[index].listFiles(), names, 0);
 		}
 		
-		return length;
+		// next file in directory
+		getJavaFiles(d, names, index+1);
 	}
 }
