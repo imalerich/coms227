@@ -55,6 +55,6 @@ public class LoopStatement extends ProgramElement implements IStatement
 	@Override
 	public Object getSubElement(int index)
 	{
-		return null;
+		return new DefaultElement();
 	}
 }

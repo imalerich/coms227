@@ -36,7 +36,7 @@ public class Identifier extends ValueExpression
 	@Override
 	public Object getSubElement(int index)
 	{
-		return null;
+		return new DefaultElement();
 	}
 
 }

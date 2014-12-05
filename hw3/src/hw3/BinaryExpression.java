@@ -77,11 +77,7 @@ public abstract class BinaryExpression extends ProgramElement implements IExpres
 	 */
 	protected boolean getBoolean(int value)
 	{
-		if (value == 0) {
-			return false;
-		} else {
-			return true;
-		}
+		return value != 0;
 	}
 	
 	/**
