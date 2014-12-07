@@ -15,7 +15,7 @@ public class OutputStatement extends ProgramElement implements IStatement
 	/**
 	 * The expression that will be evaluated and sent as output.
 	 */
-	IExpression expression;
+	private IExpression expression;
 	
 	/**
 	 * Constructs an output statement for the given expression.
@@ -44,6 +44,10 @@ public class OutputStatement extends ProgramElement implements IStatement
 	@Override
 	public Object getSubElement(int index)
 	{
+		if (index != 0) {
+			return new DefaultElement();
+		}
+		
 		return expression;
 	}
 }

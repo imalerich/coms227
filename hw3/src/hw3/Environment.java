@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import api.IEnvironment;
+import api.InterpreterException;
 
 /**
  * Concrete implementation of the IEnvironment interface.
@@ -37,8 +38,7 @@ public class Environment implements IEnvironment
 			}
 		}
 		
-		System.err.print("Error: element " + name + " was not found in this environment, value of 0 will be returned.");
-		return 0;
+		throw new InterpreterException("Invalid name used - " + name);
 	}
 
 	@Override

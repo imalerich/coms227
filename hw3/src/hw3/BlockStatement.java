@@ -63,7 +63,7 @@ public class BlockStatement extends ProgramElement implements IStatement
 		try {
 			return statements.get(index);
 		} catch (IndexOutOfBoundsException e) {
-			System.err.println("Out of bounds exception caught, returning a DefaultElement instead.");
+			// index out of bounds, return default element
 			return new DefaultElement();
 		}
 	}

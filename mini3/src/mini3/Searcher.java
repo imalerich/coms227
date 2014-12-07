@@ -1,5 +1,5 @@
 
-package hw4;
+package mini3;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,6 +34,7 @@ public class Searcher
 	{
 		// goal found, return true
 		if (current.getStatus() == Status.GOAL) {
+			solution.add(0, current);
 			return true;
 		}
 		
@@ -48,7 +49,7 @@ public class Searcher
 		while (i.hasNext()) {
 			if (search(i.next(), solution)) {
 				current.setStatus(Status.SUCCEEDED);
-				solution.add(current);
+				solution.add(0, current);
 				return true;
 			}
 		}

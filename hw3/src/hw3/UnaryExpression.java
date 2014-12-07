@@ -38,4 +38,14 @@ public abstract class UnaryExpression extends ProgramElement implements IExpress
 	{
 		return expression;
 	}
+
+	@Override
+	public Object getSubElement(int index)
+	{
+		if (index != 0) {
+			return new DefaultElement();
+		}
+		
+		return getExpression();
+	}
 }

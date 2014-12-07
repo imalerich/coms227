@@ -18,12 +18,12 @@ public class ConditionalStatement extends ProgramElement implements IStatement
 	/**
 	 * The condition to determine which statement to execute.
 	 */
-	IExpression condition;
+	private IExpression condition;
 	
 	/**
 	 * The statements that will be executed.
 	 */
-	IStatement statements[];
+	private IStatement statements[];
 	
 	/**
 	 * Constructs a conditional statement from the given condition
@@ -64,7 +64,13 @@ public class ConditionalStatement extends ProgramElement implements IStatement
 	@Override
 	public Object getSubElement(int index)
 	{
-		return statements[index];
+		if (index == 0) {
+			return this.condition;
+		} else if (index < 3) {
+			return statements[index-1];
+		} else {
+			return new DefaultElement();
+		}
 	}
 
 }

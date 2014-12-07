@@ -39,11 +39,4 @@ public class LogicalNot extends UnaryExpression
 	{
 		return 1;
 	}
-
-	@Override
-	public Object getSubElement(int index)
-	{
-		return getExpression();
-	}
-
 }

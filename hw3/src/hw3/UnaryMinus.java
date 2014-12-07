@@ -33,10 +33,4 @@ public class UnaryMinus extends UnaryExpression
 	{
 		return 1;
 	}
-
-	@Override
-	public Object getSubElement(int index)
-	{
-		return getExpression();
-	}
 }

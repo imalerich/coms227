@@ -16,12 +16,12 @@ public class LoopStatement extends ProgramElement implements IStatement
 	/**
 	 * The conditional for the loop.
 	 */
-	IExpression condition;
+	private IExpression condition;
 	
 	/**
 	 * The statement to be expected within the loop.
 	 */
-	IStatement statement;
+	private IStatement statement;
 	
 	/**
 	 * Constructs a loop statement from the given condition and body
@@ -55,6 +55,12 @@ public class LoopStatement extends ProgramElement implements IStatement
 	@Override
 	public Object getSubElement(int index)
 	{
-		return new DefaultElement();
+		if (index == 0) {
+			return this.condition;
+		} else if (index == 1) {
+			return statement;
+		} else {
+			return new DefaultElement();
+		}
 	}
 }

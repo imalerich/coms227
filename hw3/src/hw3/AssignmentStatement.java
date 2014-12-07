@@ -17,7 +17,7 @@ public class AssignmentStatement extends ProgramElement implements IStatement
 	/**
 	 * The expression to be stored in the identifier.
 	 */
-	IExpression expression;
+	private IExpression expression;
 	
 	/**
 	 * Constructs an assignment statement representing v = e.
@@ -46,7 +46,12 @@ public class AssignmentStatement extends ProgramElement implements IStatement
 	}
 
 	@Override
-	public Object getSubElement(int index) {
+	public Object getSubElement(int index) 
+	{
+		if (index != 0) {
+			return new DefaultElement();
+		}
+		
 		return expression;
 	}
 }
