@@ -48,10 +48,12 @@ public class AssignmentStatement extends ProgramElement implements IStatement
 	@Override
 	public Object getSubElement(int index) 
 	{
-		if (index != 0) {
+		if (index == 0) {
+			return getText();
+		} else if (index == 1) {
+			return expression;
+		} else {
 			return new DefaultElement();
 		}
-		
-		return expression;
 	}
 }
