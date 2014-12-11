@@ -41,7 +41,8 @@ public class AssignmentStatement extends ProgramElement implements IStatement
 	}
 
 	@Override
-	public int getNumSubElements() {
+	public int getNumSubElements() 
+	{
 		return 1;
 	}
 

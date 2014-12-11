@@ -32,7 +32,6 @@ public class OutputStatement extends ProgramElement implements IStatement
 	public void execute(IEnvironment env)
 	{
 		System.out.println( expression.evaluate(env) );
-
 	}
 
 	@Override

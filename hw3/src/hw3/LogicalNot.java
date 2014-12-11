@@ -33,10 +33,4 @@ public class LogicalNot extends UnaryExpression
 			return 0;
 		}
 	}
-
-	@Override
-	public int getNumSubElements()
-	{
-		return 1;
-	}
 }

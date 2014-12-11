@@ -40,6 +40,12 @@ public abstract class UnaryExpression extends ProgramElement implements IExpress
 	}
 
 	@Override
+	public int getNumSubElements()
+	{
+		return 1;
+	}
+
+	@Override
 	public Object getSubElement(int index)
 	{
 		if (index != 0) {

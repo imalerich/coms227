@@ -27,10 +27,4 @@ public class UnaryMinus extends UnaryExpression
 	{
 		return -getExpression().evaluate(env);
 	}
-
-	@Override
-	public int getNumSubElements()
-	{
-		return 1;
-	}
 }
