@@ -7,7 +7,6 @@ import hw3.Literal;
 import hw3.LoopStatement;
 import hw3.OutputStatement;
 import hw3.RelationalExpression;
-import viewer.TreeViewer;
 import api.ArithmeticOp;
 import api.IEnvironment;
 import api.IExpression;
